@@ -5,9 +5,8 @@ from telethon import TelegramClient, events
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
 bot_token = os.getenv("BOT_TOKEN")
-
-source_chat_ids = list(map(int, os.getenv("-1002635002901").split(',')))
-target_chat_id = int(os.getenv("-1002633022255"))
+source_chat_ids = list(map(int, os.getenv("SOURCE_CHAT_IDS").split(',')))
+target_chat_id = int(os.getenv("TARGET_CHAT_ID"))
 
 bot = TelegramClient("forward_bot", api_id, api_hash).start(bot_token=bot_token)
 
