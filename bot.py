@@ -4,13 +4,16 @@ from telethon import TelegramClient, events
 
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
-bot_token = os.getenv("BOT_TOKEN")
+
+session_path = "/etc/secrets/forward_bot.session"
+
+#
 source_chat_ids = list(map(int, os.getenv("SOURCE_CHAT_IDS").split(',')))
 target_chat_id = int(os.getenv("TARGET_CHAT_ID"))
 
-bot = TelegramClient("forward_bot", api_id, api_hash).start(bot_token=bot_token)
+client = TelegramClient(session_path, api_id, api_hash)
 
-@bot.on(events.NewMessage(chats=source_chat_ids))
+@client.on(events.NewMessage(chats=source_chat_ids))
 async def handler(event):
     text = event.raw_text
     chat_title = event.chat.title if hasattr(event.chat, 'title') else "Unknown Chat"
@@ -28,7 +31,9 @@ async def handler(event):
             f"📧 Email: {email.group(1)}\n"
             f"✈️ Telegram: {telegram.group(1)}"
         )
-        await bot.send_message(target_chat_id, clean_message)
+        await client.send_message(target_chat_id, clean_message)
 
-print("Бот запущен и мониторит чаты...")
-bot.run_until_disconnected()
+print("Запуск Telegram клиента...")
+client.start()
+print("Бот запущен. Ожидаем сообщения...")
+client.run_until_disconnected()
