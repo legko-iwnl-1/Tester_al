@@ -2,10 +2,9 @@ import os
 import re
 from telethon import TelegramClient, events
 
-# Получаем переменные из окружения
-api_id = int(os.getenv("7384500634"))
-api_hash = os.getenv("AAHuRo1RqJ4dwCT8GrzxvcDmP-PbxK-Z-Oo")
-bot_token = os.getenv("7384500634:AAHuRo1RqJ4dwCT8GrzxvcDmP-PbxK-Z-Oo")
+api_id = int(os.getenv("API_ID"))
+api_hash = os.getenv("API_HASH")
+bot_token = os.getenv("BOT_TOKEN")
 
 source_chat_ids = list(map(int, os.getenv("-1002635002901").split(',')))
 target_chat_id = int(os.getenv("-1002633022255"))
